@@ -1,0 +1,89 @@
+NAME
+    MarpaX::Simple - Generate Marpa-based parser
+
+VERSION
+    This document describes version 0.01 of MarpaX::Simple (from Perl
+    distribution MarpaX-Simple), released on 2014-05-10.
+
+SYNOPSIS
+     use MarpaX::Simple qw(gen_parser);
+
+     my $parser = gen_parser(
+         grammar => <<'EOG',
+     :start     ::= expr
+     expr       ::= num
+                  | num '+' num    action => do_add
+     num        ~ [\d]+
+     :discard   ~ whitespace
+     whitespace ~ [\s]+
+     EOG
+         actions => {
+             do_add => sub { shift; $_[0] + $_[2] }
+         },
+     );
+
+     print $parser->('3 + 4'); # -> 7
+     print $parser->('3 + ');  # dies with parse error
+
+    which is a shortcut for roughly this:
+
+     no strict 'refs';
+     use Marpa::R2;
+     my $grammar = Marpa::R2::Scanless::G->new({source => \$args{grammar}});
+     my $pkg = "MarpaX::Simple::gen" . some_random_value();
+     my $actions = $args{actions};
+     for (keys %$actions) {
+         ${"$pkg\::$_"} = $actions->{$_};
+     }
+     my $parser = sub {
+         my $input = shift;
+         my $recce = Marpa::R2::Scanless::R->new({
+             grammar => $grammar,
+             semantics_package => $pkg,
+         });
+     };
+
+DESCRIPTION
+    This module tries to simplify the incantation of producing a parser
+    using Marpa::R2 (the scanless interface) by reducing the process to a
+    single function call: "gen_parser".
+
+FUNCTIONS
+  gen_parser(%args) -> code
+    Generate Marpa-based parser.
+
+    Arguments ('*' denotes required arguments):
+
+    *   actions => *hash*
+
+    *   grammar* => *str*
+
+    Return value:
+
+SEE ALSO
+    Marpa::R2
+
+HOMEPAGE
+    Please visit the project's homepage at
+    <https://metacpan.org/release/MarpaX-Simple>.
+
+SOURCE
+    Source repository is at
+    <https://github.com/sharyanto/perl-MarpaX-Simple>.
+
+BUGS
+    Please report any bugs or feature requests on the bugtracker website
+    <https://rt.cpan.org/Public/Dist/Display.html?Name=MarpaX-Simple>
+
+    When submitting a bug or request, please include a test-file or a patch
+    to an existing test-file that illustrates the bug or desired feature.
+
+AUTHOR
+    Steven Haryanto <stevenharyanto@gmail.com>
+
+COPYRIGHT AND LICENSE
+    This software is copyright (c) 2014 by Steven Haryanto.
+
+    This is free software; you can redistribute it and/or modify it under
+    the same terms as the Perl 5 programming language system itself.
+
