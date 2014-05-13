@@ -6,8 +6,8 @@ use UUID::Random;
 use Exporter qw(import);
 our @EXPORT_OK = qw(gen_parser);
 
-our $VERSION = '0.01'; # VERSION
-our $DATE = '2014-05-10'; # DATE
+our $VERSION = '0.02'; # VERSION
+our $DATE = '2014-05-13'; # DATE
 
 our %SPEC;
 
@@ -22,8 +22,20 @@ $SPEC{gen_parser} = {
             pos => 0,
         },
         actions => {
-            summary => '',
+            summary => 'Supply actions specified in the grammar',
             schema  => ['hash*', each_value => 'code*'],
+        },
+        too_many_earley_items => {
+            summary => "Will be passed to recognizer's constructor",
+            schema  => ['int*'],
+        },
+        trace_terminals => {
+            summary => "Will be passed to recognizer's constructor",
+            schema  => ['bool'],
+        },
+        trace_values => {
+            summary => "Will be passed to recognizer's constructor",
+            schema  => ['bool'],
         },
     },
     result_naked => 1,
@@ -46,10 +58,15 @@ sub gen_parser {
     my $parser = sub {
         my $input = shift;
 
-        my $recce = Marpa::R2::Scanless::R->new({
+        my $rec_args = {
             grammar => $grammar,
             semantics_package => $pkg,
-        });
+            trace_terminals => $args{trace_terminals} ? 1:0,
+            trace_values    => $args{trace_values}    ? 1:0,
+        };
+        $rec_args->{too_many_earley_items} = $args{too_many_earley_items}
+            if $args{too_many_earley_items};
+        my $recce = Marpa::R2::Scanless::R->new($rec_args);
         $recce->read(\$input);
         my $valref = $recce->value;
         if (!defined($valref)) {
@@ -77,7 +94,7 @@ MarpaX::Simple - Generate Marpa-based parser
 
 =head1 VERSION
 
-This document describes version 0.01 of MarpaX::Simple (from Perl distribution MarpaX-Simple), released on 2014-05-10.
+This document describes version 0.02 of MarpaX::Simple (from Perl distribution MarpaX-Simple), released on 2014-05-13.
 
 =head1 SYNOPSIS
 
@@ -137,11 +154,35 @@ Arguments ('*' denotes required arguments):
 
 =item * B<actions> => I<hash>
 
+Supply actions specified in the grammar.
+
 =item * B<grammar>* => I<str>
+
+=item * B<too_many_earley_items> => I<int>
+
+Will be passed to recognizer's constructor.
+
+=item * B<trace_terminals> => I<bool>
+
+Will be passed to recognizer's constructor.
+
+=item * B<trace_values> => I<bool>
+
+Will be passed to recognizer's constructor.
 
 =back
 
 Return value:
+
+=head1 TODO
+
+Allow customizing error message/behavior.
+
+Support more grammar (L<Marpa::R2::Scanless::G>) options, e.g.:
+C<trace_file_handle>.
+
+Support more recognizer (L<Marpa::R2::Scanless::R>) options, e.g.:
+C<max_parses>, C<trace_file_handle>.
 
 =head1 SEE ALSO
 

@@ -25,7 +25,7 @@ resources:
   bugtracker: https://rt.cpan.org/Public/Dist/Display.html?Name=MarpaX-Simple
   homepage: https://metacpan.org/release/MarpaX-Simple
   repository: git://github.com/sharyanto/perl-MarpaX-Simple.git
-version: '0.01'
+version: '0.02'
 x_Dist_Zilla:
   perl:
     version: '5.018002'

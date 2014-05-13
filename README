@@ -2,8 +2,8 @@ NAME
     MarpaX::Simple - Generate Marpa-based parser
 
 VERSION
-    This document describes version 0.01 of MarpaX::Simple (from Perl
-    distribution MarpaX-Simple), released on 2014-05-10.
+    This document describes version 0.02 of MarpaX::Simple (from Perl
+    distribution MarpaX-Simple), released on 2014-05-13.
 
 SYNOPSIS
      use MarpaX::Simple qw(gen_parser);
@@ -56,9 +56,32 @@ FUNCTIONS
 
     *   actions => *hash*
 
+        Supply actions specified in the grammar.
+
     *   grammar* => *str*
 
+    *   too_many_earley_items => *int*
+
+        Will be passed to recognizer's constructor.
+
+    *   trace_terminals => *bool*
+
+        Will be passed to recognizer's constructor.
+
+    *   trace_values => *bool*
+
+        Will be passed to recognizer's constructor.
+
     Return value:
+
+TODO
+    Allow customizing error message/behavior.
+
+    Support more grammar (Marpa::R2::Scanless::G) options, e.g.:
+    "trace_file_handle".
+
+    Support more recognizer (Marpa::R2::Scanless::R) options, e.g.:
+    "max_parses", "trace_file_handle".
 
 SEE ALSO
     Marpa::R2
