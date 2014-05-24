@@ -21,6 +21,9 @@ my %WriteMakefileArgs = (
   "LICENSE" => "perl",
   "NAME" => "MarpaX::Simple",
   "PREREQ_PM" => {
+    "File::ShareDir" => 0,
+    "File::Slurp::Tiny" => 0,
+    "Log::Any" => 0,
     "Marpa::R2" => 0,
     "Rinci" => "v1.1.0",
     "UUID::Random" => 0
@@ -31,7 +34,7 @@ my %WriteMakefileArgs = (
     "IPC::Open3" => 0,
     "Test::More" => 0
   },
-  "VERSION" => "0.02",
+  "VERSION" => "0.03",
   "test" => {
     "TESTS" => "t/*.t"
   }
@@ -39,9 +42,12 @@ my %WriteMakefileArgs = (
 
 
 my %FallbackPrereqs = (
+  "File::ShareDir" => 0,
+  "File::Slurp::Tiny" => 0,
   "File::Spec" => 0,
   "IO::Handle" => 0,
   "IPC::Open3" => 0,
+  "Log::Any" => 0,
   "Marpa::R2" => 0,
   "Rinci" => "v1.1.0",
   "Test::More" => 0,

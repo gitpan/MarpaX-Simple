@@ -17,6 +17,9 @@ meta-spec:
   version: '1.4'
 name: MarpaX-Simple
 requires:
+  File::ShareDir: '0'
+  File::Slurp::Tiny: '0'
+  Log::Any: '0'
   Marpa::R2: '0'
   Rinci: v1.1.0
   UUID::Random: '0'
@@ -25,7 +28,7 @@ resources:
   bugtracker: https://rt.cpan.org/Public/Dist/Display.html?Name=MarpaX-Simple
   homepage: https://metacpan.org/release/MarpaX-Simple
   repository: git://github.com/sharyanto/perl-MarpaX-Simple.git
-version: '0.02'
+version: '0.03'
 x_Dist_Zilla:
   perl:
     version: '5.018002'
