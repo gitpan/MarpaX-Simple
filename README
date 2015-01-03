@@ -1,13 +1,7 @@
-NAME
-    MarpaX::Simple - Generate Marpa-based parser
-
-VERSION
-    This document describes version 0.03 of MarpaX::Simple (from Perl
-    distribution MarpaX-Simple), released on 2014-05-24.
-
 SYNOPSIS
-     use MarpaX::Simple qw(gen_parser);
 
+     use MarpaX::Simple qw(gen_parser);
+    
      my $parser = gen_parser(
          grammar => <<'EOG',
      :start     ::= expr
@@ -21,7 +15,7 @@ SYNOPSIS
              do_add => sub { shift; $_[0] + $_[2] }
          },
      );
-
+    
      print $parser->('3 + 4'); # -> 7
      print $parser->('3 + ');  # dies with parse error
 
@@ -44,106 +38,12 @@ SYNOPSIS
      };
 
 DESCRIPTION
+
     This module tries to simplify the incantation of producing a parser
     using Marpa::R2 (the scanless interface) by reducing the process to a
-    single function call: "gen_parser".
-
-FUNCTIONS
-  gen_parser(%args) -> code
-    Generate Marpa-based parser.
-
-    One of "slif_grammar", "grammar_class_file", "grammar_module_file",
-    "grammar_file", "grammar" must be specified for the input grammar. The
-    arguments will be checked in that order. The simplest would be to use
-    grammar text inlined in your source code ("grammar"), but for larger
-    grammar it might be more convenient to put it in a separate file (the
-    "grammar_*file" arguments) so you can check line numbers from error
-    messages more easily. The "slif_grammar" has the lowest overhead since
-    you specify SLIF grammar that are already instantiated. See also the
-    related Dist::Zilla plugin
-    "Dist::Zilla::Plugin::InsertMarpaSLIFGrammar".
-
-    Arguments ('*' denotes required arguments):
-
-    *   actions => *hash*
-
-        Supply code for actions specified in the grammar.
-
-    *   grammar => *str*
-
-        Marpa BNF input grammar text.
-
-    *   grammar_class_file => *str*
-
-        Marpa BNF input grammar file, resolved using File::ShareDir's
-        class_file().
-
-    *   grammar_file => *str*
-
-        Marpa BNF input grammar file.
-
-    *   grammar_module_file => *str*
-
-        Marpa BNF input grammar file, resolved using File::ShareDir's
-        module_file().
-
-    *   slif_grammar => *obj*
-
-        SLIF input grammar.
-
-        This input-grammar argument is checked first because it is the most
-        ready-to-use form and has the least overhead. The other
-        input-grammar arguments require creating the
-        "Marpa::R2::Scanless::G" object first from the Marpa BNF DSL
-        grammar.
-
-    *   too_many_earley_items => *int*
-
-        Will be passed to recognizer's constructor.
-
-    *   trace_terminals => *bool*
-
-        Will be passed to recognizer's constructor.
-
-    *   trace_values => *bool*
-
-        Will be passed to recognizer's constructor.
-
-    Return value:
-
-TODO
-    Allow customizing error message/behavior.
-
-    Support more grammar (Marpa::R2::Scanless::G) options, e.g.:
-    "trace_file_handle".
-
-    Support more recognizer (Marpa::R2::Scanless::R) options, e.g.:
-    "max_parses", "trace_file_handle".
+    single function call: gen_parser.
 
 SEE ALSO
+
     Marpa::R2
-
-HOMEPAGE
-    Please visit the project's homepage at
-    <https://metacpan.org/release/MarpaX-Simple>.
-
-SOURCE
-    Source repository is at
-    <https://github.com/sharyanto/perl-MarpaX-Simple>.
-
-BUGS
-    Please report any bugs or feature requests on the bugtracker website
-    <https://rt.cpan.org/Public/Dist/Display.html?Name=MarpaX-Simple>
-
-    When submitting a bug or request, please include a test-file or a patch
-    to an existing test-file that illustrates the bug or desired feature.
-
-AUTHOR
-    Steven Haryanto <stevenharyanto@gmail.com>
-
-COPYRIGHT AND LICENSE
-    This software is copyright (c) 2014 by Steven Haryanto.
-
-    This is free software; you can redistribute it and/or modify it under
-    the same terms as the Perl 5 programming language system itself.
 

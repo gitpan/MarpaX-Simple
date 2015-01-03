@@ -1,5 +1,8 @@
 package MarpaX::Simple;
 
+our $DATE = '2015-01-03'; # DATE
+our $VERSION = '0.04'; # VERSION
+
 use 5.010001;
 use strict;
 use warnings;
@@ -10,9 +13,6 @@ use UUID::Random;
 
 use Exporter qw(import);
 our @EXPORT_OK = qw(gen_parser);
-
-our $VERSION = '0.03'; # VERSION
-our $DATE = '2014-05-24'; # DATE
 
 our %SPEC;
 
@@ -169,7 +169,7 @@ MarpaX::Simple - Generate Marpa-based parser
 
 =head1 VERSION
 
-This document describes version 0.03 of MarpaX::Simple (from Perl distribution MarpaX-Simple), released on 2014-05-24.
+This document describes version 0.04 of MarpaX::Simple (from Perl distribution MarpaX-Simple), released on 2015-01-03.
 
 =head1 SYNOPSIS
 
@@ -280,18 +280,7 @@ Will be passed to recognizer's constructor.
 
 =back
 
-Return value:
-
-=head1 TODO
-
-Allow customizing error message/behavior.
-
-Support more grammar (L<Marpa::R2::Scanless::G>) options, e.g.:
-C<trace_file_handle>.
-
-Support more recognizer (L<Marpa::R2::Scanless::R>) options, e.g.:
-C<max_parses>, C<trace_file_handle>.
-
+Return value:  (code)
 =head1 SEE ALSO
 
 L<Marpa::R2>
@@ -314,11 +303,11 @@ feature.
 
 =head1 AUTHOR
 
-Steven Haryanto <stevenharyanto@gmail.com>
+perlancar <perlancar@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2014 by Steven Haryanto.
+This software is copyright (c) 2015 by perlancar@cpan.org.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
